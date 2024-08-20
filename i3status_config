@@ -1,0 +1,60 @@
+general {
+    colors = true
+    interval = 1
+    output_format = i3bar
+    color_good = "#33ee33"
+    color_degraded = "#8c7f22"
+    color_bad = "#ff3333"
+}
+
+order += "ethernet eth0"
+order += "ethernet eth1"
+order += "ethernet tun0"
+order += "net_rate"
+order += "sysdata"
+order += "diskdata"
+order += "tztime local"
+order += "process_status"
+
+sysdata {
+    thresholds = [(0, "good"), (60, "degraded"), (80, "bad")]
+    format = " [\?color=cpu_used_percent CPU: {cpu_used_percent:.1f}%], [\?color=mem_used_percent Mem: {mem_used:.1f}/{mem_total:.1f} GB ]"
+    cpus = []
+    cache_timeout = 1
+}
+
+process_status {
+    process = "openvpn"
+    format = " VPN "
+    cache_timeout = 2
+}
+
+ethernet eth0 {
+    format_up = " eth0: %ip "
+    format_down = ""
+}
+
+ethernet eth1 {
+    format_up = " eth1: %ip "
+    format_down = ""
+}
+
+ethernet tun0 {
+    format_up = " tun0: %ip "
+    format_down = ""
+}
+
+net_rate {
+    format = " ↓ {down} ↑ {up} "
+    format_value = "[\?min_length=9 {value:.1f} {unit}]"
+    precision = 0
+    format_no_connection = ""
+}
+
+tztime local {
+    format = " %d/%m/%y %H:%M "
+}
+
+diskdata {
+    format = " Disk: {free} GB "
+}

@@ -1,0 +1,41 @@
+{
+  "mode": "pattern",
+  "sync": false,
+  "autoBackup": false,
+  "passthrough": "",
+  "theme": "",
+  "container": {},
+  "commands": {},
+  "data": [
+    {
+      "active": true,
+      "title": "Burp",
+      "type": "http",
+      "hostname": "127.0.0.1",
+      "port": 8080,
+      "username": "",
+      "password": "",
+      "cc": "",
+      "city": "",
+      "color": "#66cc66",
+      "pac": "",
+      "pacString": "",
+      "proxyDNS": false,
+      "include": [
+        {
+          "title": "HTB",
+          "pattern": "*://*.htb*/",
+          "type": "wildcard",
+          "active": true
+        },
+        {
+          "title": "HTB IP",
+          "pattern": "*://*10.*/",
+          "type": "wildcard",
+          "active": true
+        }
+      ],
+      "exclude": []
+    }
+  ]
+}

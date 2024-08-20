@@ -1,0 +1,88 @@
+#!/bin/bash
+
+PWD='/home/kali/Documents/Tools'
+mkdir -p $PWD/Windows/www-root
+mkdir -p $PWD/Linux/www-root
+
+# LinEnum
+cp $PWD/Linux/LinEnum/LinEnum.sh $PWD/Linux/www-root
+
+# chisel
+version=$(curl https://api.github.com/repos/jpillora/chisel/releases/latest -s | jq -r .tag_name | cut -d 'v' -f 2)
+wget -q https://github.com/jpillora/chisel/releases/latest/download/chisel_${version}_windows_386.gz -O $PWD/Windows/www-root/chisel_${version}_windows_386.gz
+wget -q https://github.com/jpillora/chisel/releases/latest/download/chisel_${version}_windows_amd64.gz -O $PWD/Windows/www-root/chisel_${version}_windows_amd64.gz
+wget -q https://github.com/jpillora/chisel/releases/latest/download/chisel_${version}_linux_386.gz -O $PWD/Linux/www-root/chisel_${version}_linux_386.gz
+wget -q https://github.com/jpillora/chisel/releases/latest/download/chisel_${version}_linux_amd64.gz -O $PWD/Linux/www-root/chisel_${version}_linux_amd64.gz
+gunzip -qq $PWD/Windows/www-root/chisel_${version}_windows_386.gz
+gunzip -qq $PWD/Windows/www-root/chisel_${version}_windows_amd64.gz
+gunzip -qq $PWD/Linux/www-root/chisel_${version}_linux_386.gz
+gunzip -qq $PWD/Linux/www-root/chisel_${version}_linux_amd64.gz
+mv $PWD/Windows/www-root/chisel_${version}_windows_amd64 $PWD/Windows/www-root/chisel64.exe
+mv $PWD/Windows/www-root/chisel_${version}_windows_386 $PWD/Windows/www-root/chisel.exe
+mv $PWD/Linux/www-root/chisel_${version}_linux_amd64 $PWD/Linux/www-root/chisel
+mv $PWD/Linux/www-root/chisel_${version}_linux_386 $PWD/Linux/www-root/chisel32
+
+# ligolo
+version=$(curl https://api.github.com/repos/nicocha30/ligolo-ng/releases/latest -s | jq -r .tag_name | cut -d 'v' -f 2)
+wget -q https://github.com/nicocha30/ligolo-ng/releases/latest/download/ligolo-ng_agent_${version}_windows_amd64.zip -O $PWD/Windows/www-root/ligolo-ng_agent_${version}_windows_amd64.zip
+wget -q https://github.com/nicocha30/ligolo-ng/releases/latest/download/ligolo-ng_agent_${version}_linux_amd64.tar.gz -O $PWD/Linux/www-root/ligolo-ng_agent_${version}_linux_amd64.tar.gz
+wget -q https://github.com/nicocha30/ligolo-ng/releases/latest/download/ligolo-ng_proxy_${version}_linux_amd64.tar.gz -O $PWD/Linux/www-root/ligolo-ng_proxy_${version}_linux_amd64.tar.gz
+unzip -qq $PWD/Windows/www-root/ligolo-ng_agent_${version}_windows_amd64.zip agent.exe -d $PWD/Windows/www-root
+tar xzf $PWD/Linux/www-root/ligolo-ng_agent_${version}_linux_amd64.tar.gz --directory $PWD/Linux/www-root agent
+tar xzf $PWD/Linux/www-root/ligolo-ng_proxy_${version}_linux_amd64.tar.gz --directory $PWD/Linux/www-root proxy
+mv $PWD/Windows/www-root/agent.exe $PWD/Windows/www-root/ligolo-agent.exe
+mv $PWD/Linux/www-root/agent $PWD/Linux/www-root/ligolo-agent
+mv $PWD/Linux/www-root/proxy $PWD/Linux/www-root/ligolo-proxy
+rm $PWD/Windows/www-root/ligolo-ng_agent_${version}_windows_amd64.zip
+rm $PWD/Linux/www-root/ligolo-ng_agent_${version}_linux_amd64.tar.gz
+rm $PWD/Linux/www-root/ligolo-ng_proxy_${version}_linux_amd64.tar.gz
+
+# lse
+cp $PWD/Linux/linux-smart-enumeration/lse.sh $PWD/Linux/www-root
+
+# pspy
+wget -q https://github.com/DominicBreuker/pspy/releases/latest/download/pspy32 -O $PWD/Linux/www-root/pspy32
+wget -q https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64 -O $PWD/Linux/www-root/pspy64
+
+# BloodHound
+cp $PWD/Windows/BloodHound/Collectors/SharpHound.* $PWD/Windows/www-root
+
+# SharpCollection
+mkdir -p $PWD/Windows/www-root/SharpCollection
+cp $PWD/Windows/SharpCollection/NetFramework_4.0_Any/* $PWD/Windows/www-root/SharpCollection
+
+# PowerSploit
+cp $PWD/Windows/PowerSploit/Recon/PowerView.ps1 $PWD/Windows/www-root
+cp $PWD/Windows/PowerSploit/Privesc/PowerUp.ps1 $PWD/Windows/www-root
+
+# kekeo
+wget -q https://github.com/gentilkiwi/kekeo/releases/latest/download/kekeo.zip -O /tmp/kekeo.zip
+mkdir -p /tmp/kekeo
+unzip -qq /tmp/kekeo.zip -d /tmp/kekeo
+cp /tmp/kekeo/x64/kekeo.exe $PWD/Windows/www-root/kekeo64.exe
+cp /tmp/kekeo/Win32/kekeo.exe $PWD/Windows/www-root/kekeo.exe
+rm -rd /tmp/kekeo*
+
+# mimikatz
+wget -q https://github.com/gentilkiwi/mimikatz/releases/latest/download/mimikatz_trunk.zip -O /tmp/mimikatz.zip
+mkdir -p /tmp/mimikatz
+unzip -qq /tmp/mimikatz.zip -d /tmp/mimikatz
+cp /tmp/mimikatz/x64/mimikatz.exe $PWD/Windows/www-root/mimikatz64.exe
+cp /tmp/mimikatz/Win32/mimikatz.exe $PWD/Windows/www-root/mimikatz.exe
+cp /tmp/mimikatz/x64/mimidrv.sys $PWD/Windows/www-root/mimidrv64.sys
+cp /tmp/mimikatz/Win32/mimidrv.sys $PWD/Windows/www-root/mimidrv.sys
+rm -rd /tmp/mimikatz*
+cp $PWD/Windows/Invoke-Mimikatz/Invoke-Mimikatz.ps1 $PWD/Windows/www-root
+
+# peass
+wget -q https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh -O $PWD/Linux/www-root/linpeas.sh
+wget -q https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEAS.bat -O $PWD/Windows/www-root/winpeas.bat
+wget -q https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEASany.exe -O $PWD/Windows/www-root/winpeas.exe
+wget -q https://raw.githubusercontent.com/peass-ng/PEASS-ng/master/winPEAS/winPEASps1/winPEAS.ps1 -O $PWD/Windows/www-root/winpeas.ps1
+
+# nc.exe
+wget -q https://github.com/int0x33/nc.exe/raw/master/nc.exe -O $PWD/Windows/www-root/nc.exe
+wget -q https://github.com/int0x33/nc.exe/raw/master/nc64.exe -O $PWD/Windows/www-root/nc64.exe
+
+# PsTools
+cp -r $PWD/Windows/PsTools $PWD/Windows/www-root
