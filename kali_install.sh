@@ -16,7 +16,7 @@ then
     sudo apt install -y mate-desktop-environment i3
     chsh -s /usr/bin/bash
     sudo chsh -s /usr/bin/bash
-    ssh-keygen -t rsa -b 4096 -C "kali@kali.local"
+    ssh-keygen -t rsa -b 4096 -C "kali@kali.local" -f $home_kali/.ssh/id_rsa -q -N ""
     ssh-add $home_kali/.ssh/id_rsa
     sudo visudo -c -q -f $cur/sudoers && sudo cp $cur/sudoers /etc/sudoers && sudo chown root:root /etc/sudoers && sudo chmod 440 /etc/sudoers
     echo -n 1 > $home_kali/current_stage
