@@ -51,7 +51,7 @@ then
     rm $home_kali/.inputrc
     ln $cur/.inputrc $home_kali/.inputrc
     
-    sudo apt -y install py3status fonts-powerline rlwrap ncat mingw-w64 python3-pyftpdlib feh python3-pip python3-venv copyq nemo xclip ranger jq netexec dconf-cli dconf-editor
+    sudo apt -y install py3status fonts-powerline rlwrap ncat mingw-w64 python3-pyftpdlib feh python3-pip python3-venv copyq nemo xclip ranger jq netexec dconf-cli dconf-editor mate-control-center
     vim +PluginInstall +qall
     sudo pip3 install --upgrade pwntools
     wget -O ~/.gdbinit-gef.py -q http://gef.blah.cat/py
